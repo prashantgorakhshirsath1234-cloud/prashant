@@ -4,7 +4,7 @@ window.SITE_SETTINGS = {
   sheet: {
     videos:  '',   // Videos tab ka CSV link
     designs: '',   // Designs tab ka CSV link
-    site:    ''    // Site tab ka CSV link
+    site:    'https://docs.google.com/spreadsheets/d/e/2PACX-1vS4CwyrdppmRIGPB4HFhhoTz7Vd5asCacdBFCckdsjUkfGIniV-wO7faZCAzua9joCPGq5SoG33WoV4/pub?gid=1425321576&single=true&output=csv'    // Site tab ka CSV link
   },
 
   // Vimeo player ka style:
