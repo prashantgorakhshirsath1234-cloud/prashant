@@ -652,7 +652,7 @@ function applySiteRows(rows){
     const path=key.split('.');if(!roots.has(path[0]))continue;
     let o=CONFIG;for(let i=0;i<path.length-1&&o;i++)o=o[path[i]]&&typeof o[path[i]]==='object'?o[path[i]]:null;
     if(!o)continue;const k=path[path.length-1];if(!(k in o)&&path.length>1)continue;
-    if(Array.isArray(o[k]))o[k]=csvList(val);
+    if(Array.isArray(o[k]))o[k]=String(val).split(String(val).includes('|')?'|':',').map(x=>x.trim()).filter(Boolean);
     else if(/(^|\.)(img|image)$/i.test(key))o[k]=safeUrl(val)||o[k];
     else o[k]=String(val).replace(/\\n/g,'\n')}
 }
