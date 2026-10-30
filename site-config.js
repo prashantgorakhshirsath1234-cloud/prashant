@@ -2,9 +2,9 @@
 window.SITE_SETTINGS = {
   // Google Sheet ke 3 tabs ko "Publish to web" -> CSV karke yaha 3 links paste karo (quotes ke andar)
   sheet: {
-    videos: 'https://docs.google.com/spreadsheets/d/e/2PACX-1vS4CwyrdppmRIGPB4HFhhoTz7Vd5asCacdBFCckdsjUkfGIniV-wO7faZCAzua9joCPGq5SoG33WoV4/pub?gid=220801656&single=true&output=csv',   // Videos tab ka CSV link
-    designs: 'https://docs.google.com/spreadsheets/d/e/2PACX-1vS4CwyrdppmRIGPB4HFhhoTz7Vd5asCacdBFCckdsjUkfGIniV-wO7faZCAzua9joCPGq5SoG33WoV4/pub?gid=1662201287&single=true&output=csv',   // Designs tab ka CSV link
-    site:    'https://docs.google.com/spreadsheets/d/e/2PACX-1vS4CwyrdppmRIGPB4HFhhoTz7Vd5asCacdBFCckdsjUkfGIniV-wO7faZCAzua9joCPGq5SoG33WoV4/pub?gid=1425321576&single=true&output=csv'    // Site tab ka CSV link
+    videos: 'https://docs.google.com/spreadsheets/d/e/2PACX-1vS4CwyrdppmRIGPB4HFhhoTz7Vd5asCacdBFCckdsjUkfGIniV-wO7faZCAzua9joCPGq5SoG33WoV4/pub?gid=583657933&single=true&output=csv',   // Videos tab ka CSV link
+    designs: 'https://docs.google.com/spreadsheets/d/e/2PACX-1vS4CwyrdppmRIGPB4HFhhoTz7Vd5asCacdBFCckdsjUkfGIniV-wO7faZCAzua9joCPGq5SoG33WoV4/pub?gid=1485563864&single=true&output=csv',   // Designs tab ka CSV link
+    site:    'https://docs.google.com/spreadsheets/d/e/2PACX-1vS4CwyrdppmRIGPB4HFhhoTz7Vd5asCacdBFCckdsjUkfGIniV-wO7faZCAzua9joCPGq5SoG33WoV4/pub?gid=1624772500&single=true&output=csv'    // Site tab ka CSV link
   },
 
   // Vimeo player ka style:
