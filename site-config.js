@@ -14,6 +14,6 @@ window.SITE_SETTINGS = {
   vimeoControls: 'native',
 
   // Contact form (messages email me aayenge). Web3Forms (web3forms.com) se free key lo:
-  formEndpoint: '',   // Web3Forms ke liye: 'https://api.web3forms.com/submit'   |  Formspree ke liye: 'https://formspree.io/f/xxxxxxx'
-  formKey: ''         // sirf Web3Forms ke liye: apni access key
+  formEndpoint: 'https://api.web3forms.com/submit',   // Web3Forms ke liye: 'https://api.web3forms.com/submit'   |  Formspree ke liye: 'https://formspree.io/f/xxxxxxx'
+  formKey: 'f23d3fbd-fbf5-4ffb-9e81-d785f97ea0c8'         // sirf Web3Forms ke liye: apni access key
 };
