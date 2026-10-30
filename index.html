@@ -642,7 +642,13 @@ function csvParse(t){const rows=[];let r=[],c='',q=false;t=String(t).replace(/^ï
   r.push(c);if(r.some(x=>x.trim()!==''))rows.push(r);
   if(!rows.length)return[];const h=rows[0].map(x=>x.trim().toLowerCase().replace(/[^a-z0-9]+/g,'_').replace(/^_|_$/g,''));
   return rows.slice(1).map(a=>{const o={};h.forEach((k,i)=>{if(k)o[k]=(a[i]||'').trim()});return o})}
-async function sheetGet(url){if(!url)return null;try{const ac=new AbortController(),to=setTimeout(()=>ac.abort(),6000);const r=await fetch(url,{signal:ac.signal,cache:'no-store'});clearTimeout(to);return r.ok?csvParse(await r.text()):null}catch(_){return null}}
+window.__sheetDiag={};
+async function sheetGet(url,name){const D=window.__sheetDiag;if(!url){D[name]='no link in site-config.js';return null}
+  try{const ac=new AbortController(),to=setTimeout(()=>ac.abort(),9000);const r=await fetch(url,{signal:ac.signal,cache:'no-store'});clearTimeout(to);
+    if(!r.ok){D[name]='HTTP '+r.status;return null}
+    const t=await r.text();if(/^\s*<(!doctype|html)/i.test(t)){D[name]='got a web page, not CSV (publish this tab as CSV)';return null}
+    const rows=csvParse(t);D[name]=rows.length+' rows, columns: '+(rows[0]?Object.keys(rows[0]).join(', '):'none');return rows}
+  catch(e){D[name]='failed: '+(e&&e.name==='AbortError'?'timeout':String(e&&e.message||e));return null}}
 const slug=(t,i,seen)=>{let b=String(t||'item').toLowerCase().replace(/[^a-z0-9]+/g,'-').replace(/^-|-$/g,'')||'item',id=b;if(seen){for(let n=2;seen.has(id);n++)id=b+'-'+n;seen.add(id)}return id};
 const hiddenRow=r=>/^(no|hide|hidden|false|0|off)$/i.test(r.show||r.visible||'')||/^(yes|true|1)$/i.test(r.hidden||'');
 const csvList=s=>String(s||'').split(/[,|]/).map(x=>x.trim()).filter(Boolean);
@@ -658,7 +664,7 @@ function applySiteRows(rows){
 }
 async function loadSheet(){
   const S=CONFIG.sheet||{};if(!S.videos&&!S.designs&&!S.site)return;
-  const [vr,dr,sr]=await Promise.all([sheetGet(S.videos),sheetGet(S.designs),sheetGet(S.site)]);
+  const [vr,dr,sr]=await Promise.all([sheetGet(S.videos,'Videos'),sheetGet(S.designs,'Designs'),sheetGet(S.site,'Site')]);
   if(sr)applySiteRows(sr);
   const keyed=k=>!!(sr&&sr.some(x=>(x.key||'')===k));
   if(vr&&vr.length){const seenV=new Set(),L=vr.filter(r=>!hiddenRow(r)&&(r.title||r.vimeo||r.video||r.link)).map((r,i)=>({id:r.id||slug(r.title,i,seenV),title:r.title||'',category:r.category||'Films',duration:r.duration||'',vimeo:r.vimeo||r.video||r.link||r.url||'',src:safeUrl(r.mp4||r.file||''),poster:safeUrl(r.poster||r.thumbnail||''),desc:r.description||r.desc||'',software:csvList(r.software||r.tools),timeline:r.timeline||''}));
@@ -1293,6 +1299,7 @@ async function boot(){
   await loadSheet();normVideos(DATA.videos);await vmEnrich(DATA.videos);
   applyTheme();buildCards();mountCards();layout();renderLib('v');renderLib('d');seoText();
   setHud(0);
+  if(/[?&]debug=1/.test(location.search)){const d=document.createElement('pre');d.style.cssText='position:fixed;left:8px;bottom:8px;z-index:99999;max-width:92vw;max-height:60vh;overflow:auto;margin:0;padding:10px 12px;background:#000c;color:#9f9;font:12px/1.5 monospace;border:1px solid #3a3;border-radius:8px;white-space:pre-wrap';d.textContent='SHEET DEBUG\n'+Object.entries(window.__sheetDiag).map(([k,v])=>k+': '+v).join('\n')+'\nvideos on site: '+DATA.videos.length+'\ndesigns on site: '+DATA.designs.length+'\nconfig loaded: '+!!window.SITE_SETTINGS;document.body.appendChild(d)}
   const h=location.hash.match(/^#v-(.+)$/);if(h)setTimeout(()=>openVideo(decodeURIComponent(h[1])),600);
   tStart=performance.now();last=tStart;requestAnimationFrame(frame);
 }
